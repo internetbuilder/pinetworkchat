@@ -9,13 +9,13 @@ div.container
     input#input
     button Send
   .modal.fate#settingsModal(tabindex="-1", aria-labelledby="settingsModal", aria-hidden="true")
-    .modal-dialog
+    .modal-dialog.modal-dialog-centered
       .modal-content
         .modal-header
-          h5.modal-title#settingsModalLabel Settings
+          h5.modal-title#settingsModalLabel Change User Name
           button(type="button", data-bs-dismiss="modal", aria-label="Close").btn-close
         .modal-body
-          input#currentUserInput(onblur="change()")
+          input#currentUserInput(autocomplete="off")
         .modal-footer
+          button(type="button", data-bs-dismiss="modal", onclick="change()").btn.btn-primary Save
           button(type="button", data-bs-dismiss="modal").btn.btn-secondary Close
-          button(type="button").btn-primary

@@ -39,7 +39,7 @@ const addCurrentUserToUsersBox = (userName) => {
   usersDom.innerHTML += userBox;
 };
 
-function change(){
+function change() {
   const currentUserList = document.querySelector(`.${userName}-userlist`);
   const oldUserName = userName;
   const newUserName = document.querySelector(`#currentUserInput`).value;

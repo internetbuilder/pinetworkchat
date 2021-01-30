@@ -44,4 +44,5 @@ p.userName {
 #changeUserName {
     font-size:.6rem;
     display: inline-block;
+    float: right;
 }
