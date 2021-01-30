@@ -31,3 +31,7 @@ body {
 .msgTime {
     font-size: .75rem;
 }
+#form > button {
+    width: 50%;
+    margin: 0 auto;
+}
