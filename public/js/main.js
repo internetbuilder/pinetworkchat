@@ -33,7 +33,7 @@ const addCurrentUserToUsersBox = (userName) => {
 
   const userBox = `
     <div class="chat_ib ${userName}-userlist">
-      <p class="userName">${userName}</p><btn class="btn btn-primary" id="changeUserName" type="button" data-bs-toggle="modal" data-bs-target="#settingsModal">Change</btn>
+      <p class="userName">${userName}</p><btn class="btn btn-primary btn-sm" id="changeUserName" type="button" data-bs-toggle="modal" data-bs-target="#settingsModal">Change</btn>
     </div>
   `;
   usersDom.innerHTML += userBox;
@@ -57,7 +57,7 @@ const changeUserName = (oldUserName, newUserName) => {
 const changeCurrentUserName = (oldUserName, newUserName) => {
   const userLabel = document.querySelector(`.${oldUserName}-userlist`);
   userLabel.className = `chat_ib ${newUserName}-userlist`;
-  userLabel.innerHTML = `<p class="userName">${newUserName}</p><btn class="btn btn-primary" id="changeUserName" type="button" data-bs-toggle="modal" data-bs-target="#settingsModal">Change</btn>`
+  userLabel.innerHTML = `<p class="userName">${newUserName}</p><btn class="btn btn-primary btn-sm" id="changeUserName" type="button" data-bs-toggle="modal" data-bs-target="#settingsModal">Change</btn>`
 }
 
 socket.on('chat message', function(msg) {

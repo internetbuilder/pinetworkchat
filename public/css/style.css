@@ -26,6 +26,7 @@ body {
 #messages {
     overflow-y: auto;
     word-break: break-word;
+    list-style: none;
 }
 
 .msgTime {
