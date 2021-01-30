@@ -20,7 +20,7 @@ const addToUsersBox = (userName) => {
 
   const userBox = `
     <div class="chat_ib ${userName}-userlist">
-      <h5>${userName}</h5>
+      <p class="userName">${userName}</p>
     </div>
   `;
   usersDom.innerHTML += userBox;
@@ -33,7 +33,7 @@ const addCurrentUserToUsersBox = (userName) => {
 
   const userBox = `
     <div class="chat_ib ${userName}-userlist">
-      <input type="text" id="currentUserInput" value="${userName}" onblur="change()"/>
+      <p class="userName">${userName}</p><btn class="btn btn-primary" id="changeUserName" type="button" data-bs-toggle="modal" data-bs-target="#settingsModal">Change</btn>
     </div>
   `;
   usersDom.innerHTML += userBox;
@@ -51,13 +51,13 @@ function change(){
 const changeUserName = (oldUserName, newUserName) => {
   const userLabel = document.querySelector(`.${oldUserName}-userlist`);
   userLabel.className = `chat_ib ${newUserName}-userlist`;
-  userLabel.innerHTML = `<h5>${newUserName}</h5>`
+  userLabel.innerHTML = `<p class="userName">${newUserName}</p>`
 }
 
 const changeCurrentUserName = (oldUserName, newUserName) => {
   const userLabel = document.querySelector(`.${oldUserName}-userlist`);
   userLabel.className = `chat_ib ${newUserName}-userlist`;
-  userLabel.innerHTML = `<input type="text" id="currentUserInput" value="${newUserName}" onblur="change()"/>`
+  userLabel.innerHTML = `<p class="userName">${newUserName}</p><btn class="btn btn-primary" id="changeUserName" type="button" data-bs-toggle="modal" data-bs-target="#settingsModal">Change</btn>`
 }
 
 socket.on('chat message', function(msg) {
@@ -78,15 +78,15 @@ socket.on("user disconnected", function (userName) {
 });
 
 socket.on("change user name", function (oldUserName, newUserName) {
-  console.log('cun');
-  changeUserName(oldUserName, newUserName);
+  console.log('cun', userName, newUserName);
+  (userName == newUserName) ? changeCurrentUserName(oldUserName, newUserName) : changeUserName(oldUserName, newUserName);
 });
 
 
 const newUserConnected = (user) => {
   userName = user || `User${Math.floor(Math.random() * 1000000)}`;
   socket.emit("new user", userName);
-  addToUsersBox(userName);
+  addCurrentUserToUsersBox(userName);
 };
 
 // new user is created so we generate nickname and emit event

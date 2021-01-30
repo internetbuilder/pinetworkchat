@@ -36,6 +36,12 @@ body {
     margin: 0 auto;
 }
 
+p.userName {
+    display: inline-block;
+    margin-right: 1rem;
+}
+
 #changeUserName {
     font-size:.6rem;
+    display: inline-block;
 }
