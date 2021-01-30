@@ -4,12 +4,28 @@ body {
 
 #chatRow {
     height: 80vh;
+    border: 1px solid black;
 }
 
 #messageArea {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    height: 100%;
+}
+
+#users {
+    border-right: 1px solid black;
+    padding: 1rem 1rem;
+}
+
+#users > div {
+    overflow-y: auto;
+}
+
+#messages {
+    overflow-y: auto;
+    word-break: break-word;
 }
 
 .msgTime {

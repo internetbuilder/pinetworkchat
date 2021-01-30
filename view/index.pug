@@ -9,10 +9,11 @@ html
     div.container
       #chatRow.row
         #users.col-md-2
-          h4 Users
+          h5 Active Users
+          hr
         #messageArea.col-md-8
           ul#messages
-      form#form(action="").row
+      form#form(action="", autocomplete="off").row
         input#input
         button Send
     script(src="/socket.io/socket.io.js")
