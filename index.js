@@ -44,6 +44,12 @@ io.on('connection', (socket) => {
   socket.on('chat message', (userName, msg) => {
     io.emit('chat message', chatManager.formatMessage(userName, msg));
   });
+
+  socket.on('change user name', (oldUserName, newUserName) => {
+    chatManager.changeUserName(oldUserName, newUserName);
+    io.emit('chat message', chatManager.formatMessage(oldUserName, `changed their name to ${newUserName}.`));
+    io.emit('change user name', oldUserName, newUserName);
+  });
 });
 
 // Express-Server Start Up

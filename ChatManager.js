@@ -20,4 +20,9 @@ module.exports = class ChatManager {
     return formattedMessage;
   }
 
+  changeUserName(oldUserName, newUserName) {
+    this.removeUser(oldUserName);
+    this.addNewUser(newUserName);
+  }
+
 }
