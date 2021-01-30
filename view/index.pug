@@ -1,3 +1,4 @@
+doctype html
 html
   head
     title= title
@@ -5,16 +6,8 @@ html
     link(rel="stylesheet", href="/css/style.css")
     script(src="/js/bootstrap-v5.0.0/bootstrap.bundle.min.js")
   body
-    h1= message
-    div.container
-      #chatRow.row
-        #users.col-md-2
-          h5 Active Users
-          hr
-        #messageArea.col-md-8
-          ul#messages
-      form#form(action="", autocomplete="off").row
-        input#input
-        button Send
+    //h1= message
+    include ./header.pug
+    include ./chat.pug
     script(src="/socket.io/socket.io.js")
     script(src="/js/main.js")
