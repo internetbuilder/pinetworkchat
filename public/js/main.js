@@ -84,7 +84,7 @@ socket.on("change user name", function (oldUserName, newUserName) {
 const newUserConnected = (user) => {
   userName = user || `User${Math.floor(Math.random() * 1000000)}`;
   socket.emit("new user", userName);
-  addCurrentUserToUsersBox(userName);
+  addToUsersBox(userName);
 };
 
 // new user is created so we generate nickname and emit event

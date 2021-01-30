@@ -35,3 +35,7 @@ body {
     width: 50%;
     margin: 0 auto;
 }
+
+#changeUserName {
+    font-size:.6rem;
+}

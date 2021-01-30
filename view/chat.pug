@@ -1,6 +1,7 @@
 div.container
   #chatRow.row
-    #users.col-md-2
+    #users.col-md-3
+      btn#changeUserName(type="button", data-bs-toggle="modal", data-bs-target="#settingsModal").btn.btn-primary Change
       h5 Active Users
       hr
     #messageArea.col-md-8
@@ -8,3 +9,14 @@ div.container
   form#form(action="", autocomplete="off").row
     input#input
     button Send
+  .modal.fate#settingsModal(tabindex="-1", aria-labelledby="settingsModal", aria-hidden="true")
+    .modal-dialog
+      .modal-content
+        .modal-header
+          h5.modal-title#settingsModalLabel Settings
+          button(type="button", data-bs-dismiss="modal", aria-label="Close").btn-close
+        .modal-body
+          input#currentUserInput(onblur="change()")
+        .modal-footer
+          button(type="button", data-bs-dismiss="modal").btn.btn-secondary Close
+          button(type="button").btn-primary
