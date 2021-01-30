@@ -38,6 +38,11 @@ module.exports = class ChatManager {
     return `<span class='msgTime'>${time}</span>\t${userName} has disconnected.`;
   }
 
+  createUserUploadMessage(userName, fileName) {
+    let time = moment().format('hh:mm');
+    return `<span class='msgTime'>${time}</span>\t${userName} has uploaded ${fileName}.`;
+  }
+
   changeUserName(oldUserName, newUserName) {
     const user = this.activeUsers.find(user => user.userName == oldUserName);
     user.userName = newUserName;

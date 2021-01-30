@@ -7,7 +7,8 @@ div.container
       ul#messages
   form#form(action="", autocomplete="off").row
     input#input
-    button Send
+    input#siofu_input(type="file")
+    button#formSubmit(onclick="formButtonClick()") Send
   .modal.fate#settingsModal(tabindex="-1", aria-labelledby="settingsModal", aria-hidden="true")
     .modal-dialog.modal-dialog-centered
       .modal-content

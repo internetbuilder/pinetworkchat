@@ -1,4 +1,5 @@
 const moment = require("moment");
+const siofu = require("socketio-file-upload");
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
@@ -11,8 +12,9 @@ const activeUsers = chatManager.activeUsers;
 
 // Configure Express
 app.use(express.static(__dirname + '/public')); // Static files: js/css
-app.set('views', 'view')                        // Views directory
-app.set("view engine", "pug")                   // View Engine
+app.set('views', 'view');                       // Views directory
+app.set("view engine", "pug");                  // View Engine
+app.use(siofu.router);                          // SocketIo File Upload
 
 // Configure Routing
 app.get('/', (req, res) => {
@@ -26,6 +28,14 @@ app.get('/chat', (req, res) => {
 
 // Configure Socket.io
 io.on('connection', (socket) => {
+  const uploader = new siofu();
+  uploader.dir = "./userUploads/";
+  uploader.listen(socket);
+
+  uploader.on("complete", (data) => {
+    console.log("complete", data);
+  })
+
   console.log('a user connected');
   
   socket.on("new user", (data)=> {
@@ -55,6 +65,10 @@ io.on('connection', (socket) => {
     chatManager.changeUserName(oldUserName, newUserName);
     io.emit('chat message', chatManager.createNameChangeMessage(oldUserName, newUserName));
     io.emit('change user name', oldUserName, newUserName);
+  });
+
+  socket.on('fileSent', (oldUserName, newUserName) => {
+    io.emit('chat message', chatManager.createUserUploadMessage(oldUserName, newUserName));
   });
 });
 

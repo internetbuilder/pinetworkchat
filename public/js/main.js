@@ -1,9 +1,25 @@
 var socket = io();
+var uploader = new SocketIOFileUpload(socket);
+
 var form = document.getElementById('form');
 var input = document.getElementById('input');
 let usersDom = document.getElementById("users");
 const messages = document.getElementById("messages");
+const fileInput = document.getElementById("siofu_input");
+
 let userName = "@";
+
+
+uploader.listenOnSubmit(document.getElementById("formSubmit"), document.getElementById("siofu_input"));
+
+function formButtonClick() {
+  const filePath = fileInput.value
+  if (filePath != "") {
+    const fileName = filePath.split("\\").pop();
+    socket.emit("fileSent", userName, fileName);
+    fileInput.value = "";
+  }
+}
 
 form.addEventListener('submit', function(e) {
 	e.preventDefault();
