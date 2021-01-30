@@ -68,10 +68,12 @@ socket.on('chat message', function(msg) {
 });
 
 socket.on("new user", function (data) {
-  data.map((user) => addToUsersBox(user));
+  console.log('cNU', data);
+  data.map((user) => addToUsersBox(user.userName));
 });
 
 socket.on("user disconnected", function (userName) {
+  console.log('disconn', userName);
   document.querySelector(`.${userName}-userlist`).remove();
 });
 

@@ -30,16 +30,19 @@ io.on('connection', (socket) => {
   
   socket.on("new user", (data)=> {
     socket.userId = data;
-    chatManager.addNewUser(data);
-    io.emit("new user", [...activeUsers]);
-    console.log('aUsers', activeUsers);
+    chatManager.addNewUser(data, data);
+    /*for (let i = 0; i < chatManager.activeUsers.length; i++) {
+      io.emit("new user", chatManager.activeUsers[i].userName);
+    }*/
+    io.emit("new user", [...chatManager.activeUsers]);
+    console.log('aUsers', chatManager.activeUsers);
     io.emit('chat message', chatManager.createUserHasJoinedMessage(data));
   });
   
   socket.on('disconnect', () => {
     console.log('user disconnected');
+    io.emit("user disconnected", chatManager.convertSocketIdToUserName(socket.userId));
     chatManager.removeUser(socket.userId);
-    io.emit("user disconnected", socket.userId);
     io.emit('chat message', chatManager.createUserDisconnectedMessage(socket.userId));
   });
   

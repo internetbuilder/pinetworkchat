@@ -1,16 +1,19 @@
 const moment = require("moment");
+const User = require("./models/User");
 
 module.exports = class ChatManager {
   constructor() {
-    this.activeUsers = new Set();
+    this.activeUsers = [];
   }
 
-  addNewUser(userName) {
-    this.activeUsers.add(userName);
+  addNewUser(socketId, userName) {
+    const newUser = new User(socketId, userName);
+    this.activeUsers.push(newUser);
+    console.log(this.activeUsers);
   }
 
-  removeUser(userName) {
-    this.activeUsers.delete(userName);
+  removeUser(socketId) {
+    this.activeUsers = this.activeUsers.filter(user => user.socketId != socketId);
   }
 
   formatMessage(userName, msg) {
@@ -36,8 +39,16 @@ module.exports = class ChatManager {
   }
 
   changeUserName(oldUserName, newUserName) {
-    this.removeUser(oldUserName);
-    this.addNewUser(newUserName);
+    const user = this.activeUsers.find(user => user.userName == oldUserName);
+    user.userName = newUserName;
+  }
+
+  convertSocketIdToUserName(socketId) {
+    console.log('socketId', socketId);
+    console.log(this.activeUsers);
+    const user = this.activeUsers.find(user => user.socketId == socketId);
+    console.log("convert", user);
+    return user.userName;
   }
 
 }
