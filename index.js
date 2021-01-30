@@ -1,3 +1,4 @@
+const moment = require("moment");
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
@@ -27,6 +28,13 @@ function addToSet(nameStr) {
   }
 }
 
+function formatMessage(userName, msg) {
+  let time = moment().format('hh:mm');
+
+  let formattedMessage = "<span class='msgTime'>"  + time + "</span>\t" + userName + "\t" + msg;
+  return formattedMessage;
+}
+
 io.on('connection', (socket) => {
   console.log('a user connected');
   
@@ -39,12 +47,12 @@ io.on('connection', (socket) => {
   
   socket.on('disconnect', () => {
     console.log('user disconnected');
-	activeUsers.delete(socket.userId);
+	  activeUsers.delete(socket.userId);
     io.emit("user disconnected", socket.userId);
   });
   
-  socket.on('chat message', (msg) => {
-    io.emit('chat message', msg);
+  socket.on('chat message', (userName, msg) => {
+    io.emit('chat message', formatMessage(userName, msg));
   });
 });
 

@@ -8,7 +8,7 @@ let userName = "@";
 form.addEventListener('submit', function(e) {
 	e.preventDefault();
 	if (input.value) {
-	  socket.emit('chat message', userName.padEnd("15", " ") + input.value);
+	  socket.emit('chat message', userName, input.value);
 	  input.value = '';
 	}
 });
@@ -27,8 +27,8 @@ const addToUsersBox = (userName) => {
 };
 
 socket.on('chat message', function(msg) {
-var item = document.createElement('li');
-	item.textContent = msg;
+  var item = document.createElement('li');
+  item.innerHTML = msg;
 	messages.appendChild(item);
 	window.scrollTo(0, document.body.scrollHeight);
 });
@@ -37,16 +37,17 @@ socket.on("new user", function (data) {
   data.map((user) => addToUsersBox(user));
 });
 
+socket.on("user disconnected", function (userName) {
+  document.querySelector(`.${userName}-userlist`).remove();
+});
 
 
 const newUserConnected = (user) => {
   userName = user || `User${Math.floor(Math.random() * 1000000)}`;
   socket.emit("new user", userName);
-  socket.emit("chat message", userName + " connected to the chat.");
+  socket.emit("chat message", userName, "connected to the chat.");
   addToUsersBox(userName);
 };
-
-
 
 // new user is created so we generate nickname and emit event
 newUserConnected();
