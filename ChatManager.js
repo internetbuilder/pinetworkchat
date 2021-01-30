@@ -17,29 +17,29 @@ module.exports = class ChatManager {
   }
 
   formatMessage(userName, msg) {
-    let time = moment().format('hh:mm');
+    let time = moment().format('HH:mm');
 
     let formattedMessage = `<span class='msgTime'>${time}</span>\t${userName}:\t${msg}`;
     return formattedMessage;
   }
 
   createNameChangeMessage(oldUserName, newUserName) {
-    let time = moment().format('hh:mm');
+    let time = moment().format('HH:mm');
     return `<span class='msgTime'>${time}</span>\t${oldUserName} has changed their name to ${newUserName}.`;
   }
 
   createUserHasJoinedMessage(userName) {
-    let time = moment().format('hh:mm');
+    let time = moment().format('HH:mm');
     return `<span class='msgTime'>${time}</span>\t${userName} has joined the chat.`;
   }
 
   createUserDisconnectedMessage(userName) {
-    let time = moment().format('hh:mm');
+    let time = moment().format('HH:mm');
     return `<span class='msgTime'>${time}</span>\t${userName} has disconnected.`;
   }
 
   createUserUploadMessage(userName, fileName) {
-    let time = moment().format('hh:mm');
+    let time = moment().format('HH:mm');
     return `<span class='msgTime'>${time}</span>\t${userName} has uploaded ${fileName}.`;
   }
 
