@@ -1,6 +1,8 @@
 var socket = io();
 var form = document.getElementById('form');
 var input = document.getElementById('input');
+let usersDom = document.getElementById("users");
+const messages = document.getElementById("messages");
 let userName = "@";
 
 form.addEventListener('submit', function(e) {
@@ -11,11 +13,28 @@ form.addEventListener('submit', function(e) {
 	}
 });
 
+const addToUsersBox = (userName) => {
+  if (!!document.querySelector(`.${userName}-userlist`)) {
+    return;
+  }
+
+  const userBox = `
+    <div class="chat_ib ${userName}-userlist">
+      <h5>${userName}</h5>
+    </div>
+  `;
+  usersDom.innerHTML += userBox;
+};
+
 socket.on('chat message', function(msg) {
 var item = document.createElement('li');
 	item.textContent = msg;
 	messages.appendChild(item);
 	window.scrollTo(0, document.body.scrollHeight);
+});
+
+socket.on("new user", function (data) {
+  data.map((user) => addToUsersBox(user));
 });
 
 
@@ -27,5 +46,8 @@ const newUserConnected = (user) => {
   addToUsersBox(userName);
 };
 
+
+
 // new user is created so we generate nickname and emit event
 newUserConnected();
+

@@ -5,18 +5,34 @@ const io = require('socket.io')(http);
 
 app.use(express.static(__dirname + '/public'));
 
+app.set('views', 'view')
+app.set("view engine", "pug")
+
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
+  res.render("index", { title: "Hey", message: "Hello"})
+  //res.sendFile(__dirname + '/public/index.html');
+});
+
+app.get('/chat', (req, res) => {
+  res.sendFile(__dirname + '/public/chat.html');
 });
 
 const activeUsers = new Set();
+
+function addToSet(nameStr) {
+  if (activeUsers.has(nameStr)) {
+
+  } else {
+    activeUsers.add(nameStr);
+  }
+}
 
 io.on('connection', (socket) => {
   console.log('a user connected');
   
   socket.on("new user", (data)=> {
     socket.userId = data;
-    activeUsers.add(data);
+    addToSet(data);
     io.emit("new user", [...activeUsers]);
 	console.log('aUsers', activeUsers);
   });

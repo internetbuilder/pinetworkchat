@@ -1,0 +1,13 @@
+#chat {
+    display: flex;
+
+}
+
+#users {
+
+}
+
+#messageArea {
+    display: flex;
+    flex-direction: column;
+}
