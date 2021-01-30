@@ -6,11 +6,24 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
+const activeUsers = new Set();
+
 io.on('connection', (socket) => {
   console.log('a user connected');
+  
+  socket.on("new user", (data)=> {
+    socket.userId = data;
+    activeUsers.add(data);
+    io.emit("new user", [...activeUsers]);
+	console.log('aUsers', activeUsers);
+  });
+  
   socket.on('disconnect', () => {
     console.log('user disconnected');
+	activeUsers.delete(socket.userId);
+    io.emit("user disconnected", socket.userId);
   });
+  
   socket.on('chat message', (msg) => {
     io.emit('chat message', msg);
   });
