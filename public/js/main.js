@@ -84,7 +84,6 @@ socket.on("change user name", function (oldUserName, newUserName) {
 const newUserConnected = (user) => {
   userName = user || `User${Math.floor(Math.random() * 1000000)}`;
   socket.emit("new user", userName);
-  socket.emit("chat message", userName, "connected to the chat.");
   addCurrentUserToUsersBox(userName);
 };
 

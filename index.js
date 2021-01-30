@@ -32,13 +32,15 @@ io.on('connection', (socket) => {
     socket.userId = data;
     chatManager.addNewUser(data);
     io.emit("new user", [...activeUsers]);
-	console.log('aUsers', activeUsers);
+    console.log('aUsers', activeUsers);
+    io.emit('chat message', chatManager.createUserHasJoinedMessage(data));
   });
   
   socket.on('disconnect', () => {
     console.log('user disconnected');
     chatManager.removeUser(socket.userId);
     io.emit("user disconnected", socket.userId);
+    io.emit('chat message', chatManager.createUserDisconnectedMessage(socket.userId));
   });
   
   socket.on('chat message', (userName, msg) => {
@@ -47,7 +49,7 @@ io.on('connection', (socket) => {
 
   socket.on('change user name', (oldUserName, newUserName) => {
     chatManager.changeUserName(oldUserName, newUserName);
-    io.emit('chat message', chatManager.formatMessage(oldUserName, `changed their name to ${newUserName}.`));
+    io.emit('chat message', chatManager.createNameChangeMessage(oldUserName, newUserName));
     io.emit('change user name', oldUserName, newUserName);
   });
 });
