@@ -4,58 +4,49 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-app.use(express.static(__dirname + '/public'));
+const ChatManager = require("./ChatManager");
 
-app.set('views', 'view')
-app.set("view engine", "pug")
+const chatManager = new ChatManager();
+const activeUsers = chatManager.activeUsers;
 
+// Configure Express
+app.use(express.static(__dirname + '/public')); // Static files: js/css
+app.set('views', 'view')                        // Views directory
+app.set("view engine", "pug")                   // View Engine
+
+// Configure Routing
 app.get('/', (req, res) => {
   res.render("index", { title: "Hey", message: "Hello"})
-  //res.sendFile(__dirname + '/public/index.html');
 });
 
 app.get('/chat', (req, res) => {
   res.sendFile(__dirname + '/public/chat.html');
 });
 
-const activeUsers = new Set();
 
-function addToSet(nameStr) {
-  if (activeUsers.has(nameStr)) {
-
-  } else {
-    activeUsers.add(nameStr);
-  }
-}
-
-function formatMessage(userName, msg) {
-  let time = moment().format('hh:mm');
-
-  let formattedMessage = "<span class='msgTime'>"  + time + "</span>\t" + userName + "\t" + msg;
-  return formattedMessage;
-}
-
+// Configure Socket.io
 io.on('connection', (socket) => {
   console.log('a user connected');
   
   socket.on("new user", (data)=> {
     socket.userId = data;
-    addToSet(data);
+    chatManager.addNewUser(data);
     io.emit("new user", [...activeUsers]);
 	console.log('aUsers', activeUsers);
   });
   
   socket.on('disconnect', () => {
     console.log('user disconnected');
-	  activeUsers.delete(socket.userId);
+    chatManager.removeUser(socket.userId);
     io.emit("user disconnected", socket.userId);
   });
   
   socket.on('chat message', (userName, msg) => {
-    io.emit('chat message', formatMessage(userName, msg));
+    io.emit('chat message', chatManager.formatMessage(userName, msg));
   });
 });
 
+// Express-Server Start Up
 http.listen(3000, () => {
   console.log('listening on *:3000');
 });
