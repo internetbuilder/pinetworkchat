@@ -1,13 +1,9 @@
-#chat {
-    display: flex;
-
-}
-
-#users {
-
+#chatRow {
+    height: 80vh;
 }
 
 #messageArea {
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
 }

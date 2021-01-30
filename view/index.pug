@@ -6,13 +6,14 @@ html
     script(src="/js/bootstrap-v5.0.0/bootstrap.bundle.min.js")
   body
     h1= message
-    div#chat
-      #users
-        h2 Users
-      #messageArea
-        ul#messages
-        form#form(action="")
-          input#input
-          button Send
+    div.container
+      #chatRow.row
+        #users.col-md-2
+          h4 Users
+        #messageArea.col-md-8
+          ul#messages
+      form#form(action="").row
+        input#input
+        button Send
     script(src="/socket.io/socket.io.js")
     script(src="/js/main.js")
