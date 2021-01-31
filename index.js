@@ -37,7 +37,6 @@ io.on('connection', (socket) => {
     const imgPath = data.file.pathName;
     console.log("complete", imgPath);
     fs.readFile(imgPath, function (err, data) {
-      console.log("file-read");
       io.emit('imageConversionByServer', "data:image/png;base64," + data.toString("base64"));
     });
   })

@@ -14,22 +14,18 @@ uploader.listenOnSubmit(document.getElementById("formSubmit"), document.getEleme
 
 function b64(e) { var t = ""; var n = new Uint8Array(e); var r = n.byteLength; for (var i = 0; i < r; i++) { t += String.fromCharCode(n[i]) } return window.btoa(t) }
 
-function formButtonClick() {
-  const filePath = fileInput.value
-  if (filePath != "") {
-    //console.log('fp exists');
-    const fileName = filePath.split("\\").pop();
-    socket.emit("fileSent", userName, fileName);
-    //fileInput.value = "";
-  }
-}
-
 form.addEventListener('submit', function(e) {
 	e.preventDefault();
 	if (input.value) {
 	  socket.emit('chat message', userName, input.value);
 	  input.value = '';
-	}
+  }
+  const filePath = fileInput.value
+  if (filePath != "") {
+    const fileName = filePath.split("\\").pop();
+    socket.emit("fileSent", userName, fileName);
+    fileInput.value = "";
+  }
 });
 
 const addToUsersBox = (userName) => {
