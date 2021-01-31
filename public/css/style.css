@@ -3,8 +3,8 @@ body {
 }
 
 #chatRow {
-    height: 80vh;
-    border: 1px solid black;
+    height: 50vh;
+    box-shadow: 0 13px 5px -1px rgb(0 0 0 / 20%);
 }
 
 #messageArea {
@@ -15,7 +15,8 @@ body {
 }
 
 #users {
-    border-right: 1px solid black;
+    background-color: #fff;
+    box-shadow: 0 16px 10px 0 rgb(0 0 0 / 14%), 0 11px 18px 0 rgb(0 0 0 / 12%), 0 13px 5px -1px rgb(0 0 0 / 20%);
     padding: 1rem 1rem;
 }
 
@@ -33,8 +34,6 @@ body {
     font-size: .75rem;
 }
 #form > button {
-    width: 50%;
-    margin: 0 auto;
 }
 
 p.userName {
@@ -46,4 +45,43 @@ p.userName {
     font-size:.6rem;
     display: inline-block;
     float: right;
+}
+
+#nav-chat-tab, #nav-share-tab, #nav-contact-tab {
+    font-size: 2rem;
+    margin: 0 1rem;
+}
+
+#input {
+    border: 2px solid #a4b4f18c;
+    padding: 1rem 1rem;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+input#currentUserInput {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid black;
+    padding: 1rem 1rem;
+}
+
+#form > label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #e6e6e6;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+ul > li:nth-child(odd) {
+    background-color: #f7f7f7;
 }

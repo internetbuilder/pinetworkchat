@@ -6,9 +6,10 @@ div.container
     #messageArea.col-sm-9
       ul#messages
   form#form(action="", autocomplete="off").row
-    input#input
-    input#siofu_input(type="file")
-    button#formSubmit Send
+    input#input.col-sm-10(placeholder="Type your message here")
+    input#siofu_input(type="file", onchange="chatFunctions.fileChange()")
+    label(for="siofu_input").custom-file-upload.col-sm-1 Upload
+    button#formSubmit.col-sm-1.custom-file-upload Send
   .modal.fate#settingsModal(tabindex="-1", aria-labelledby="settingsModal", aria-hidden="true")
     .modal-dialog.modal-dialog-centered
       .modal-content
@@ -16,7 +17,7 @@ div.container
           h5.modal-title#settingsModalLabel Change User Name
           button(type="button", data-bs-dismiss="modal", aria-label="Close").btn-close
         .modal-body
-          input#currentUserInput(autocomplete="off")
+          input#currentUserInput(autocomplete="off", placeholder="Type your new user name")
         .modal-footer
           button(type="button", data-bs-dismiss="modal", onclick="chatFunctions.change()").btn.btn-primary Save
           button(type="button", data-bs-dismiss="modal").btn.btn-secondary Close

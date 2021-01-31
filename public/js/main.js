@@ -46,6 +46,11 @@ class ChatFunctions {
     socket.emit("change user name", oldUserName, newUserName);
   }
 
+  fileChange() {
+    const fileInputValue = this.fileInput.value;
+    console.log("fileChange", fileInputValue);
+  }
+
   changeUserName(oldUserName, newUserName) {
     const userLabel = document.querySelector(`.${oldUserName}-userlist`);
     userLabel.className = `chat_ib ${newUserName}-userlist`;
@@ -110,5 +115,8 @@ socket.on('imageConversionByServer', function (data) {
   let img = document.createElement('img');
   img.setAttribute("src", data);
   img.setAttribute("width", "200");
-  chatFunctions.messages.appendChild(img);
+
+  var item = document.createElement('li');
+  item.appendChild(img);
+  chatFunctions.messages.appendChild(item);
 });
