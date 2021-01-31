@@ -13,10 +13,10 @@ const chatManager = new ChatManager();
 const activeUsers = chatManager.activeUsers;
 
 // Configure Express
-app.use(express.static(path.join(__dirname, 'public'))); // Static files: js/css
-app.set('views', path.join(__dirname, 'view'));                       // Views directory
-app.set("view engine", "pug");                  // View Engine
-app.use(siofu.router);                          // SocketIo File Upload
+app.use(express.static(path.join(__dirname, 'public')));  // Static files: js/css
+app.set('views', path.join(__dirname, 'view'));           // Views directory
+app.set("view engine", "pug");                            // View Engine
+app.use(siofu.router);                                    // SocketIo File Upload
 
 // Configure Routing
 app.get('/', (req, res) => {
