@@ -1,90 +1,100 @@
 var socket = io();
 var uploader = new SocketIOFileUpload(socket);
 
-var form = document.getElementById('form');
-var input = document.getElementById('input');
-let usersDom = document.getElementById("users");
-const messages = document.getElementById("messages");
-const fileInput = document.getElementById("siofu_input");
-
-let userName = "@";
-
-
-uploader.listenOnSubmit(document.getElementById("formSubmit"), document.getElementById("siofu_input"));
-
-function b64(e) { var t = ""; var n = new Uint8Array(e); var r = n.byteLength; for (var i = 0; i < r; i++) { t += String.fromCharCode(n[i]) } return window.btoa(t) }
-
-form.addEventListener('submit', function(e) {
-	e.preventDefault();
-	if (input.value) {
-	  socket.emit('chat message', userName, input.value);
-	  input.value = '';
-  }
-  const filePath = fileInput.value
-  if (filePath != "") {
-    const fileName = filePath.split("\\").pop();
-    socket.emit("fileSent", userName, fileName);
-    fileInput.value = "";
-  }
-});
-
-const addToUsersBox = (userName) => {
-  if (!!document.querySelector(`.${userName}-userlist`)) {
-    return;
+class ChatFunctions {
+  constructor() {
+    this.socket = io();
+    this.username = "";
+    this.form = document.getElementById('form');
+    this.input = document.getElementById('input');
+    this.usersDom = document.getElementById("users");
+    this.messages = document.getElementById("messages");
+    this.fileInput = document.getElementById("siofu_input");
+    this.formSubmit = document.getElementById("formSubmit");
   }
 
-  const userBox = `
-    <div class="chat_ib ${userName}-userlist">
-      <p class="userName">${userName}</p>
-    </div>
-  `;
-  usersDom.innerHTML += userBox;
-};
+  addToUsersBox(userName) {
+    if (!!document.querySelector(`.${userName}-userlist`)) {
+      return;
+    }
 
-const addCurrentUserToUsersBox = (userName) => {
-  if (!!document.querySelector(`.${userName}-userlist`)) {
-    return;
-  }
+    const userBox = `
+      <div class="chat_ib ${userName}-userlist">
+        <p class="userName">${userName}</p>
+      </div>
+    `;
+    chatFunctions.usersDom.innerHTML += userBox;
+  };
 
-  const userBox = `
+  addCurrentUserToUsersBox(userName) {
+    if (!!document.querySelector(`.${userName}-userlist`)) {
+      return;
+    }
+
+    const userBox = `
     <div class="chat_ib ${userName}-userlist">
       <p class="userName">${userName}</p><btn class="btn btn-primary btn-sm" id="changeUserName" type="button" data-bs-toggle="modal" data-bs-target="#settingsModal">Change</btn>
     </div>
   `;
-  usersDom.innerHTML += userBox;
-};
+    this.usersDom.innerHTML += userBox;
+  };
 
-function change() {
-  const currentUserList = document.querySelector(`.${userName}-userlist`);
-  const oldUserName = userName;
-  const newUserName = document.querySelector(`#currentUserInput`).value;
-  userName = newUserName;
-  //changeCurrentUserName(oldUserName, newUserName);
-  socket.emit("change user name", oldUserName, newUserName);
+  change() {
+    const oldUserName = this.username;
+    const newUserName = document.querySelector(`#currentUserInput`).value;
+    this.username = newUserName;
+    socket.emit("change user name", oldUserName, newUserName);
+  }
+
+  changeUserName(oldUserName, newUserName) {
+    const userLabel = document.querySelector(`.${oldUserName}-userlist`);
+    userLabel.className = `chat_ib ${newUserName}-userlist`;
+    userLabel.innerHTML = `<p class="userName">${newUserName}</p>`
+  }
+
+  changeCurrentUserName(oldUserName, newUserName) {
+    const userLabel = document.querySelector(`.${oldUserName}-userlist`);
+    userLabel.className = `chat_ib ${newUserName}-userlist`;
+    userLabel.innerHTML = `<p class="userName">${newUserName}</p><btn class="btn btn-primary btn-sm" id="changeUserName" type="button" data-bs-toggle="modal" data-bs-target="#settingsModal">Change</btn>`
+  }
+
+  newUserConnected(user) {
+    this.username = user || `User${Math.floor(Math.random() * 1000000)}`;
+    socket.emit("new user", this.username);
+    this.addCurrentUserToUsersBox(this.username);
+  };
 }
 
-const changeUserName = (oldUserName, newUserName) => {
-  const userLabel = document.querySelector(`.${oldUserName}-userlist`);
-  userLabel.className = `chat_ib ${newUserName}-userlist`;
-  userLabel.innerHTML = `<p class="userName">${newUserName}</p>`
-}
+const chatFunctions = new ChatFunctions();
 
-const changeCurrentUserName = (oldUserName, newUserName) => {
-  const userLabel = document.querySelector(`.${oldUserName}-userlist`);
-  userLabel.className = `chat_ib ${newUserName}-userlist`;
-  userLabel.innerHTML = `<p class="userName">${newUserName}</p><btn class="btn btn-primary btn-sm" id="changeUserName" type="button" data-bs-toggle="modal" data-bs-target="#settingsModal">Change</btn>`
-}
+// new user is created so we generate nickname and emit event
+chatFunctions.newUserConnected();
 
-socket.on('chat message', function(msg) {
+uploader.listenOnSubmit(chatFunctions.formSubmit, chatFunctions.fileInput);
+
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  if (input.value) {
+    chatFunctions.socket.emit('chat message', chatFunctions.username, input.value);
+    input.value = '';
+  }
+  const filePath = chatFunctions.fileInput.value
+  if (filePath != "") {
+    const fileName = filePath.split("\\").pop();
+    chatFunctions.socket.emit("fileSent", chatFunctions.username, fileName);
+    chatFunctions.fileInput.value = "";
+  }
+});
+
+socket.on('chat message', function (msg) {
   var item = document.createElement('li');
   item.innerHTML = msg;
-	messages.appendChild(item);
-	window.scrollTo(0, document.body.scrollHeight);
+  chatFunctions.messages.appendChild(item);
+  window.scrollTo(0, document.body.scrollHeight);
 });
 
 socket.on("new user", function (data) {
-  console.log('cNU', data);
-  data.map((user) => addToUsersBox(user.userName));
+  data.map((user) => chatFunctions.addToUsersBox(user.userName));
 });
 
 socket.on("user disconnected", function (userName) {
@@ -93,26 +103,12 @@ socket.on("user disconnected", function (userName) {
 });
 
 socket.on("change user name", function (oldUserName, newUserName) {
-  console.log('cun', userName, newUserName);
-  (userName == newUserName) ? changeCurrentUserName(oldUserName, newUserName) : changeUserName(oldUserName, newUserName);
+  (chatFunctions.username == newUserName) ? chatFunctions.changeCurrentUserName(oldUserName, newUserName) : chatFunctions.changeUserName(oldUserName, newUserName);
 });
 
 socket.on('imageConversionByServer', function (data) {
-  var item = document.createElement('li');
   let img = document.createElement('img');
   img.setAttribute("src", data);
   img.setAttribute("width", "200");
-  item.innerHTML = img;
-  messages.appendChild(img);
+  chatFunctions.messages.appendChild(img);
 });
-
-
-const newUserConnected = (user) => {
-  userName = user || `User${Math.floor(Math.random() * 1000000)}`;
-  socket.emit("new user", userName);
-  addCurrentUserToUsersBox(userName);
-};
-
-// new user is created so we generate nickname and emit event
-newUserConnected();
-
