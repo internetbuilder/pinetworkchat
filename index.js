@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 const moment = require("moment");
 const siofu = require("socketio-file-upload");
 const express = require('express');
@@ -12,8 +13,8 @@ const chatManager = new ChatManager();
 const activeUsers = chatManager.activeUsers;
 
 // Configure Express
-app.use(express.static(__dirname + '/public')); // Static files: js/css
-app.set('views', 'view');                       // Views directory
+app.use(express.static(path.join(__dirname, 'public'))); // Static files: js/css
+app.set('views', path.join(__dirname, 'view'));                       // Views directory
 app.set("view engine", "pug");                  // View Engine
 app.use(siofu.router);                          // SocketIo File Upload
 
@@ -30,7 +31,7 @@ app.get('/chat', (req, res) => {
 // Configure Socket.io
 io.on('connection', (socket) => {
   const uploader = new siofu();
-  uploader.dir = "./userUploads/";
+  uploader.dir = path.join(__dirname, "userUploads");
   uploader.listen(socket);
 
   uploader.on("complete", (data) => {
