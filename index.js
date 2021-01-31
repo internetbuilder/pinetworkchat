@@ -1,3 +1,4 @@
+const fs = require("fs");
 const moment = require("moment");
 const siofu = require("socketio-file-upload");
 const express = require('express');
@@ -33,7 +34,12 @@ io.on('connection', (socket) => {
   uploader.listen(socket);
 
   uploader.on("complete", (data) => {
-    console.log("complete", data);
+    const imgPath = data.file.pathName;
+    console.log("complete", imgPath);
+    fs.readFile(imgPath, function (err, data) {
+      console.log("file-read");
+      io.emit('imageConversionByServer', "data:image/png;base64," + data.toString("base64"));
+    });
   })
 
   console.log('a user connected');
@@ -42,7 +48,6 @@ io.on('connection', (socket) => {
     socket.userId = data;
     chatManager.addNewUser(data, data);
     io.emit("new user", [...chatManager.activeUsers]);
-    console.log('aUsers', chatManager.activeUsers);
     io.emit('chat message', chatManager.createUserHasJoinedMessage(data));
   });
   
