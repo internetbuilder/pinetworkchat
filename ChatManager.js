@@ -51,9 +51,11 @@ module.exports = class ChatManager {
   convertSocketIdToUserName(socketId) {
     console.log('socketId', socketId);
     console.log(this.activeUsers);
-    const user = this.activeUsers.find(user => user.socketId == socketId);
-    console.log("convert", user);
-    return user.userName;
+    if (socketId != undefined) {
+      const user = this.activeUsers.find(user => user.socketId == socketId);
+      console.log("convert", user);
+      return user.userName;
+    }
   }
 
 }

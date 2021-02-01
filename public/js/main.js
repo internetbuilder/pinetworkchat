@@ -95,7 +95,7 @@ socket.on('chat message', function (msg) {
   var item = document.createElement('li');
   item.innerHTML = msg;
   chatFunctions.messages.appendChild(item);
-  window.scrollTo(0, document.body.scrollHeight);
+  document.querySelector("#messages > li:last-child").scrollIntoView();
 });
 
 socket.on("new user", function (data) {
