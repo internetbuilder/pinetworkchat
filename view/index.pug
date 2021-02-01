@@ -8,19 +8,8 @@ html
   body
     //h1= message
     
-    include ./header.pug
-    nav
-      #nav-tab.nav.nav-tabs(role="tablist")
-        #nav-chat-tab.nav-link.active(data-bs-toggle="tab", href="#nav-chat", role="tab", aria-controls="nav-chat", aria-selected="true") Chat
-        #nav-share-tab.nav-link(data-bs-toggle="tab", href="#nav-share", role="tab", aria-controls="nav-share", aria-selected="false") Share
-        #nav-contact-tab.nav-link(data-bs-toggle="tab", href="#nav-contact", role="tab", aria-controls="nav-contact", aria-selected="false") Contact
-    #nav-tabContent.tab-content
-      #nav-chat.tab-pane.fade.show.active(role="tabpanel", aria-labelledby="nav-chat-tab")
-        include ./chat.pug
-      #nav-share.tab-pane.fade.show(role="tabpanel", aria-labelledby="nav-share-tab")
-        | how
-      #nav-contact.tab-pane.fade.show(role="tabpanel", aria-labelledby="nav-contact-tab")
-        | are
+    include ./header-alt.pug
+    include ./chat.pug
     script(src="/socket.io/socket.io.js")
     script(src="/socket.io-stream.js")
     script(src="/siofu/client.js")

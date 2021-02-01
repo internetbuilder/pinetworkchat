@@ -3,6 +3,10 @@ body {
     background-color: #fafafa;
 }
 
+#chat {
+    padding: 1rem 1rem;
+}
+
 #chatRow {
     height: 50vh;
     box-shadow: 0 13px 5px -1px rgb(0 0 0 / 20%);
@@ -13,6 +17,8 @@ body {
     flex-direction: column;
     justify-content: flex-end;
     height: 100%;
+    background-color: #fff;
+    z-index: -1;
 }
 
 #users {
@@ -97,4 +103,21 @@ input#currentUserInput {
 
 ul > li:nth-child(odd) {
     background-color: #f7f7f7;
+}
+
+#header {
+    background-color: #fff;
+}
+
+#header-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+}
+
+#header-content > span {
+    width: 50vh;
+    font-size: 1.5rem;
+    line-height: 1.7em;
 }
