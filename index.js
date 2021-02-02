@@ -51,15 +51,17 @@ io.on('connection', (socket) => {
     io.emit('chat message', chatManager.createUserHasJoinedMessage(data));
   });
   
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-    try {
-      io.emit("user disconnected", chatManager.convertSocketIdToUserName(socket.userId));
-    } catch (e) {
-      console.log("ERROR", e);
+  socket.on('disconnect', (reason) => {
+    console.log('user disconnected', reason);
+    if (socket.userId) {
+      io.emit('chat message', chatManager.createUserDisconnectedMessage(socket.userId));
+      try {
+        io.emit("user disconnected", chatManager.convertSocketIdToUserName(socket.userId));
+      } catch (e) {
+        console.log("ERROR", e);
+      }
+      chatManager.removeUser(socket.userId);
     }
-    chatManager.removeUser(socket.userId);
-    io.emit('chat message', chatManager.createUserDisconnectedMessage(socket.userId));
   });
   
   socket.on('chat message', (userName, msg) => {

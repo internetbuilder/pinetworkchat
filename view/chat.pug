@@ -12,7 +12,7 @@ div#chat.container
     button#formSubmit.col-sm-1.custom-file-upload Send
   .modal.fate#settingsModal(tabindex="-1", aria-labelledby="settingsModal", aria-hidden="true")
     .modal-dialog.modal-dialog-centered
-      .modal-content
+      form#nameChangeForm.modal-content(action="", autocomplete="off")
         .modal-header
           h5.modal-title#settingsModalLabel Change User Name
           button(type="button", data-bs-dismiss="modal", aria-label="Close").btn-close
@@ -20,4 +20,4 @@ div#chat.container
           input#currentUserInput(autocomplete="off", placeholder="Type your new user name")
         .modal-footer
           button(type="button", data-bs-dismiss="modal", onclick="chatFunctions.change()").btn.btn-primary Save
-          button(type="button", data-bs-dismiss="modal").btn.btn-secondary Close
+          button#nameChangeClose(type="button", data-bs-dismiss="modal").btn.btn-secondary Close

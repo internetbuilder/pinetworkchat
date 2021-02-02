@@ -77,7 +77,7 @@ chatFunctions.newUserConnected();
 
 uploader.listenOnSubmit(chatFunctions.formSubmit, chatFunctions.fileInput);
 
-form.addEventListener('submit', function (e) {
+document.getElementById("form").addEventListener('submit', function (e) {
   e.preventDefault();
   if (input.value) {
     chatFunctions.socket.emit('chat message', chatFunctions.username, input.value);
@@ -89,6 +89,12 @@ form.addEventListener('submit', function (e) {
     chatFunctions.socket.emit("fileSent", chatFunctions.username, fileName);
     chatFunctions.fileInput.value = "";
   }
+});
+
+document.getElementById("nameChangeForm").addEventListener('submit', function (e) {
+  e.preventDefault();
+  chatFunctions.change();
+  document.getElementById("nameChangeClose").click();
 });
 
 socket.on('chat message', function (msg) {
