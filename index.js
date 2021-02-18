@@ -43,18 +43,18 @@ io.on('connection', (socket) => {
   })
 
   console.log('a user connected');
-  
+
   socket.on("new user", (data)=> {
     socket.userId = data;
     chatManager.addNewUser(data, data);
     io.emit("new user", [...chatManager.activeUsers]);
     io.emit('chat message', chatManager.createUserHasJoinedMessage(data));
   });
-  
+
   socket.on('disconnect', (reason) => {
     console.log('user disconnected', reason);
     if (socket.userId) {
-      io.emit('chat message', chatManager.createUserDisconnectedMessage(socket.userId));
+      io.emit('chat message', chatManager.createUserDisconnectedMessage(chatManager.convertSocketIdToUserName(socket.userId)));
       try {
         io.emit("user disconnected", chatManager.convertSocketIdToUserName(socket.userId));
       } catch (e) {
@@ -63,15 +63,15 @@ io.on('connection', (socket) => {
       chatManager.removeUser(socket.userId);
     }
   });
-  
+
   socket.on('chat message', (userName, msg) => {
     io.emit('chat message', chatManager.formatMessage(userName, msg));
   });
 
   socket.on('change user name', (oldUserName, newUserName) => {
-    chatManager.changeUserName(oldUserName, newUserName);
-    io.emit('chat message', chatManager.createNameChangeMessage(oldUserName, newUserName));
-    io.emit('change user name', oldUserName, newUserName);
+    let userNameToUse = chatManager.changeUserName(oldUserName, newUserName);
+    io.emit('chat message', chatManager.createNameChangeMessage(oldUserName, userNameToUse));
+    io.emit('change user name', oldUserName, userNameToUse);
   });
 
   socket.on('fileSent', (oldUserName, newUserName) => {

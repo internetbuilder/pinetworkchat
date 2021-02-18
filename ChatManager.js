@@ -44,8 +44,27 @@ module.exports = class ChatManager {
   }
 
   changeUserName(oldUserName, newUserName) {
+    this.activeUsers.filter( user => user.userName == newUserName);
+
+    let usernameToUse = this.avoidDuplicateNames(newUserName);
+
     const user = this.activeUsers.find(user => user.userName == oldUserName);
-    user.userName = newUserName;
+    user.userName = usernameToUse;
+    return usernameToUse;
+  }
+
+  avoidDuplicateNames(newUserName, number = 1, baseUserName = null) {
+    let userList = this.activeUsers.filter( user => user.userName == newUserName);
+
+    if(userList.length == 0) {
+      return newUserName;
+    } else {
+      if(number > 1){
+        return this.avoidDuplicateNames(`${baseUserName}-${number}`, number + 1, baseUserName );
+      } else {
+        return this.avoidDuplicateNames(`${newUserName}-${number}`, number + 1, newUserName )
+      }
+    }
   }
 
   convertSocketIdToUserName(socketId) {
