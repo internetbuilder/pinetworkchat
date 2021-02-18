@@ -91,6 +91,11 @@ document.getElementById("form").addEventListener('submit', function (e) {
   }
 });
 
+document.getElementById("changeUserName").addEventListener('click', function (e) {
+  e.preventDefault();
+  document.getElementById("currentUserInput").focus();
+});
+
 document.getElementById("nameChangeForm").addEventListener('submit', function (e) {
   e.preventDefault();
   chatFunctions.change();
