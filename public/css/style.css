@@ -87,6 +87,10 @@ input#currentUserInput {
     padding: 1rem 1rem;
 }
 
+#siofuIcon {
+    margin: 0 auto;
+}
+
 #form > label {
     display: flex;
     flex-direction: column;

@@ -2,12 +2,13 @@ doctype html
 html
   head
     title= title
+    link(rel="stylesheet", href="/fontawesome-free-5.15.2-web/css/all.css")
     link(rel="stylesheet", href="/css/bootstrap-v5.0.0/bootstrap.min.css")
     link(rel="stylesheet", href="/css/style.css")
     script(src="/js/bootstrap-v5.0.0/bootstrap.bundle.min.js")
   body
     //h1= message
-    
+
     include ./header-alt.pug
     include ./chat.pug
     script(src="/socket.io/socket.io.js")

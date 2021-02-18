@@ -8,8 +8,10 @@ div#chat.container
   form#form(action="", autocomplete="off").row
     input#input.col-sm-10(placeholder="Type your message here")
     input#siofu_input(type="file", onchange="chatFunctions.fileChange()")
-    label(for="siofu_input").custom-file-upload.col-sm-1 Upload
-    button#formSubmit.col-sm-1.custom-file-upload Send
+    label(for="siofu_input").custom-file-upload.col-sm-1
+        i#siofuIcon.fas.fa-image.fa-lg
+    button#formSubmit.col-sm-1.custom-file-upload
+        i.fas.fa-share.fa-lg
   .modal.fate#settingsModal(tabindex="-1", aria-labelledby="settingsModal", aria-hidden="true")
     .modal-dialog.modal-dialog-centered
       form#nameChangeForm.modal-content(action="", autocomplete="off")

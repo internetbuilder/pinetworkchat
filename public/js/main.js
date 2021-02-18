@@ -33,7 +33,7 @@ class ChatFunctions {
 
     const userBox = `
     <div class="chat_ib ${userName}-userlist">
-      <p class="userName">${userName}</p><btn class="btn btn-primary btn-sm" id="changeUserName" type="button" data-bs-toggle="modal" data-bs-target="#settingsModal">Change</btn>
+      <p class="userName">${userName}</p><btn class="btn btn-primary btn-sm" id="changeUserName" type="button" data-bs-toggle="modal" data-bs-target="#settingsModal"><i class="fas fa-cog fa-lg"></i></btn>
     </div>
   `;
     this.usersDom.innerHTML += userBox;
@@ -60,7 +60,7 @@ class ChatFunctions {
   changeCurrentUserName(oldUserName, newUserName) {
     const userLabel = document.querySelector(`.${oldUserName}-userlist`);
     userLabel.className = `chat_ib ${newUserName}-userlist`;
-    userLabel.innerHTML = `<p class="userName">${newUserName}</p><btn class="btn btn-primary btn-sm" id="changeUserName" type="button" data-bs-toggle="modal" data-bs-target="#settingsModal">Change</btn>`
+    userLabel.innerHTML = `<p class="userName">${newUserName}</p><btn class="btn btn-primary btn-sm" id="changeUserName" type="button" data-bs-toggle="modal" data-bs-target="#settingsModal"><i class="fas fa-cog fa-lg"></i></btn>`
   }
 
   newUserConnected(user) {
