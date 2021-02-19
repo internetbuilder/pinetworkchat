@@ -7,6 +7,39 @@ body {
     padding: 1rem 1rem;
 }
 
+@media only screen and (max-width: 576px) {
+    #header-content > span {
+        width: 100% !important;
+    }
+
+    #chat{
+        margin: 0 0;
+        max-width: 100% !important;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #header-content > span {
+        width: 100% !important;
+    }
+
+    #chat{
+        margin: 0 0;
+        max-width: 100% !important;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    #header-content > span {
+        width: 100% !important;
+    }
+
+    #chat{
+        margin: 0 0;
+        max-width: 100% !important;
+    }
+}
+
 #chatRow {
     height: 50vh;
     box-shadow: 0 13px 5px -1px rgb(0 0 0 / 20%);
