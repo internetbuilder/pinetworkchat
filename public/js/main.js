@@ -10,6 +10,7 @@ class ChatFunctions {
     this.usersDom = document.getElementById("users");
     this.messages = document.getElementById("messages");
     this.fileInput = document.getElementById("siofu_input");
+    this.fileIcon = document.getElementById("siofuIcon");
     this.formSubmit = document.getElementById("formSubmit");
   }
 
@@ -88,6 +89,16 @@ document.getElementById("form").addEventListener('submit', function (e) {
     const fileName = filePath.split("\\").pop();
     chatFunctions.socket.emit("fileSent", chatFunctions.username, fileName);
     chatFunctions.fileInput.value = "";
+    chatFunctions.fileIcon.classList.remove("hasFile");
+  }
+});
+
+document.getElementById("siofu_input").addEventListener('change', function (e) {
+  e.preventDefault();
+  if(chatFunctions.fileInput.value == ""){
+    chatFunctions.fileIcon.classList.remove("hasFile");
+  }else{
+    chatFunctions.fileIcon.classList.add("hasFile");
   }
 });
 

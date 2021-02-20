@@ -124,6 +124,10 @@ input#currentUserInput {
     margin: 0 auto;
 }
 
+.hasFile {
+    color: green;
+}
+
 #form > label {
     display: flex;
     flex-direction: column;
