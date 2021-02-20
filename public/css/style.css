@@ -126,11 +126,24 @@ input#currentUserInput {
     position: relative;
 }
 
-#cancelFormInput {
+#inputButtons{
     position: absolute;
-    display: inline-block;
+    display: flex;
+    justify-content: space-between;
+    width: 15%;
     top: 1rem;
     right: 1rem;
+    z-index: 100;
+
+}
+
+@media only screen and (max-width: 999px) {
+    #inputButtons{
+        width: 20%;
+    }
+}
+
+#cancelFormInput {
     z-index: 100;
     color: red;
     background-color: transparent;

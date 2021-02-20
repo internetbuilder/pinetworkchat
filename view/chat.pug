@@ -6,15 +6,14 @@ div#chat.container
     #messageArea.col-9
       ul#messages
   form#form(action="", autocomplete="off").row
-    #inputDiv.col-sm-10
+    #inputDiv.col-sm-12
         input#input(placeholder="Type your message here")
-        button#cancelFormInput(type="button") Clear
-
-    input#siofu_input(type="file", onchange="chatFunctions.fileChange()")
-    label(for="siofu_input").custom-file-upload.col-sm-1
-        i#siofuIcon.fas.fa-image.fa-lg
-    button#formSubmit.col-sm-1.custom-file-upload
-        i.fas.fa-share.fa-lg
+        #inputButtons
+            input#siofu_input(type="file", onchange="chatFunctions.fileChange()")
+            label(for="siofu_input").custom-file-upload
+                i#siofuIcon.fas.fa-image.fa-lg
+            button#formSubmit.custom-file-upload.btn.btn-primary.btn-md Send
+            button#cancelFormInput(type="button") Clear
   .modal.fate#settingsModal(tabindex="-1", aria-labelledby="settingsModal", aria-hidden="true")
     .modal-dialog.modal-dialog-centered
       form#nameChangeForm.modal-content(action="", autocomplete="off")
