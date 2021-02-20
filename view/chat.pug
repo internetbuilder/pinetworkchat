@@ -6,7 +6,10 @@ div#chat.container
     #messageArea.col-9
       ul#messages
   form#form(action="", autocomplete="off").row
-    input#input.col-sm-10(placeholder="Type your message here")
+    #inputDiv.col-sm-10
+        input#input(placeholder="Type your message here")
+        button#cancelFormInput(type="button") Clear
+
     input#siofu_input(type="file", onchange="chatFunctions.fileChange()")
     label(for="siofu_input").custom-file-upload.col-sm-1
         i#siofuIcon.fas.fa-image.fa-lg

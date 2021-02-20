@@ -107,6 +107,7 @@ p.userName {
 #input {
     border: 2px solid #a4b4f18c;
     padding: 1rem 1rem;
+    width: 100%;
 }
 
 input[type="file"] {
@@ -118,6 +119,23 @@ input#currentUserInput {
     border: none;
     border-bottom: 1px solid black;
     padding: 1rem 1rem;
+}
+
+#inputDiv {
+    padding: 0 0;
+    position: relative;
+}
+
+#cancelFormInput {
+    position: absolute;
+    display: inline-block;
+    top: 1rem;
+    right: 1rem;
+    z-index: 100;
+    color: red;
+    background-color: transparent;
+    border-color: #f86e6e;
+    border-radius: 5px;
 }
 
 #siofuIcon {

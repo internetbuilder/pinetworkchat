@@ -69,6 +69,23 @@ class ChatFunctions {
     socket.emit("new user", this.username);
     this.addCurrentUserToUsersBox(this.username);
   };
+
+  toggleFileIcon() {
+    if(chatFunctions.fileInput.value == ""){
+      this.clearFileInput();
+    }else{
+      this.fileIcon.classList.add("hasFile");
+    }
+  }
+
+  clearFileInput(){
+    this.fileInput.value = "";
+    this.fileIcon.classList.remove("hasFile");
+  }
+
+  clearTextInput(){
+    this.input.value = "";
+  }
 }
 
 const chatFunctions = new ChatFunctions();
@@ -88,18 +105,19 @@ document.getElementById("form").addEventListener('submit', function (e) {
   if (filePath != "") {
     const fileName = filePath.split("\\").pop();
     chatFunctions.socket.emit("fileSent", chatFunctions.username, fileName);
-    chatFunctions.fileInput.value = "";
-    chatFunctions.fileIcon.classList.remove("hasFile");
+    chatFunctions.clearFileInput();
   }
 });
 
 document.getElementById("siofu_input").addEventListener('change', function (e) {
   e.preventDefault();
-  if(chatFunctions.fileInput.value == ""){
-    chatFunctions.fileIcon.classList.remove("hasFile");
-  }else{
-    chatFunctions.fileIcon.classList.add("hasFile");
-  }
+  chatFunctions.toggleFileIcon();
+});
+
+document.getElementById("cancelFormInput").addEventListener('click', function (e) {
+  e.preventDefault();
+  chatFunctions.clearFileInput();
+  chatFunctions.clearTextInput();
 });
 
 document.getElementById("changeUserName").addEventListener('click', function (e) {
